@@ -1,0 +1,122 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="04_olap_dbt_flow" id="0">
+    <mxGraphModel dx="1885" dy="967" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1000" background="#0b0f14" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title_bg" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111827;strokeColor=#334155;opacity=95;" value="" vertex="1">
+          <mxGeometry height="75" width="1260" x="270" y="25" as="geometry" />
+        </mxCell>
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=28;fontStyle=1;fontColor=#FFFFFF;align=center;verticalAlign=middle;" value="Architecture analytique Stripe — dbt + Snowflake" vertex="1">
+          <mxGeometry height="35" width="1260" x="270" y="35" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=18;fontStyle=1;fontColor=#CBD5E1;align=center;verticalAlign=middle;" value="BRUT → STAGING → INTERMÉDIAIRE → MARTS → ANALYSE" vertex="1">
+          <mxGeometry height="25" width="1260" x="270" y="68" as="geometry" />
+        </mxCell>
+        <mxCell id="raw" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1f2937;strokeColor=#94a3b8;fontColor=#ffffff;fontSize=17;fontStyle=1;align=center;verticalAlign=top;spacingTop=14;" value="1. Couche BRUTE Snowflake" vertex="1">
+          <mxGeometry height="520" width="260" x="50" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="raw_tables" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#020617;strokeColor=#94a3b8;fontColor=#ffffff;fontSize=12;align=left;spacing=12;" value="Tables sources répliquées dans RAW&#xa;&#xa;RAW.CURRENCIES&#xa;RAW.COUNTRIES&#xa;RAW.USERS&#xa;RAW.PAYMENT_METHODS&#xa;RAW.EXCHANGE_RATES&#xa;RAW.CUSTOMERS&#xa;RAW.MERCHANTS&#xa;RAW.BILLING_ADDRESSES&#xa;RAW.PRODUCTS&#xa;RAW.SUBSCRIPTIONS&#xa;RAW.PAYMENTS&#xa;RAW.TRANSACTIONS&#xa;RAW.CUSTOMER_LOCATIONS&#xa;RAW.REFUNDS&#xa;RAW.DISPUTES" vertex="1">
+          <mxGeometry height="300" width="200" x="80" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="raw_quality" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#422006;strokeColor=#f59e0b;fontColor=#ffffff;fontSize=12;align=left;spacing=12;" value="Contrôles qualité RAW&#xa;&#xa;Nombre de lignes&#xa;Unicité des clés primaires&#xa;Contrôles not-null&#xa;Cohérence référentielle" vertex="1">
+          <mxGeometry height="105" width="200" x="80" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="staging" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0f172a;strokeColor=#3b82f6;fontColor=#ffffff;fontSize=17;fontStyle=1;align=center;verticalAlign=top;spacingTop=14;" value="2. Couche STAGING dbt" vertex="1">
+          <mxGeometry height="520" width="260" x="390" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="staging_views" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#020617;strokeColor=#60a5fa;fontColor=#ffffff;fontSize=12;align=left;spacing=12;" value="Vues staging&#xa;&#xa;stg_currencies&#xa;stg_countries&#xa;stg_users&#xa;stg_payment_methods&#xa;stg_exchange_rates&#xa;stg_customers&#xa;stg_merchants&#xa;stg_billing_addresses&#xa;stg_products&#xa;stg_subscriptions&#xa;stg_payments&#xa;stg_transactions&#xa;stg_customer_locations&#xa;stg_refunds&#xa;stg_disputes" vertex="1">
+          <mxGeometry height="300" width="200" x="420" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="staging_role" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#082f49;strokeColor=#38bdf8;fontColor=#ffffff;fontSize=12;align=left;spacing=12;" value="Rôle&#xa;&#xa;Renommage des colonnes&#xa;Conversion des types&#xa;Nettoyage léger&#xa;Standardisation des sources" vertex="1">
+          <mxGeometry height="105" width="200" x="420" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="intermediate" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#052e16;strokeColor=#22c55e;fontColor=#ffffff;fontSize=17;fontStyle=1;align=center;verticalAlign=top;spacingTop=14;" value="3. Couche INTERMÉDIAIRE dbt" vertex="1">
+          <mxGeometry height="520" width="290" x="730" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="intermediate_models" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#022c22;strokeColor=#22c55e;fontColor=#ffffff;fontSize=12;align=left;spacing=12;" value="Couche de logique métier&#xa;&#xa;int_payments_enriched&#xa;int_transactions_enriched&#xa;int_customer_profiles&#xa;int_merchant_products&#xa;int_refunds_disputes" vertex="1">
+          <mxGeometry height="160" width="210" x="770" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="intermediate_role" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#022c22;strokeColor=#22c55e;fontColor=#ffffff;fontSize=12;align=left;spacing=12;" value="Rôle&#xa;&#xa;Jointures entre modèles staging&#xa;Règles métier&#xa;Classification du risque de fraude&#xa;Consolidation remboursements / litiges&#xa;Enrichissement clients et marchands" vertex="1">
+          <mxGeometry height="160" width="210" x="770" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="marts" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#2e1065;strokeColor=#a855f7;fontColor=#ffffff;fontSize=17;fontStyle=1;align=center;verticalAlign=top;spacingTop=14;" value="4. Couche MARTS Snowflake" vertex="1">
+          <mxGeometry height="520" width="390" x="1110" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="dimensions" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#020617;strokeColor=#c084fc;fontColor=#ffffff;fontSize=12;align=left;spacing=12;" value="Dimensions&#xa;&#xa;dim_date&#xa;dim_customers&#xa;dim_merchants&#xa;dim_products&#xa;dim_countries&#xa;dim_currencies&#xa;dim_payment_methods" vertex="1">
+          <mxGeometry height="155" width="155" x="1140" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="facts" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#020617;strokeColor=#c084fc;fontColor=#ffffff;fontSize=12;align=left;spacing=12;" value="Tables de faits&#xa;&#xa;fact_payments&#xa;fact_transactions&#xa;fact_refunds&#xa;fact_disputes" vertex="1">
+          <mxGeometry height="110" width="155" x="1320" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="business_marts" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#020617;strokeColor=#d8b4fe;fontColor=#ffffff;fontSize=12;align=left;spacing=12;" value="Marts métier&#xa;&#xa;mart_daily_revenue&#xa;mart_customer_ltv&#xa;mart_fraud_monitoring&#xa;mart_subscription_revenue" vertex="1">
+          <mxGeometry height="135" width="170" x="1140" y="475" as="geometry" />
+        </mxCell>
+        <mxCell id="marts_role" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#581c87;strokeColor=#e879f9;fontColor=#ffffff;fontSize=12;align=left;spacing=12;" value="Rôle&#xa;&#xa;Modélisation dimensionnelle de type Kimball&#xa;Dimensions conformes&#xa;Tables de faits par grain métier&#xa;Marts agrégés pour le reporting" vertex="1">
+          <mxGeometry height="160" width="155" x="1330" y="462.5" as="geometry" />
+        </mxCell>
+        <mxCell id="analytics" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#451a1a;strokeColor=#f87171;fontColor=#ffffff;fontSize=13;fontStyle=1;align=left;spacing=16;" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;5. Business Intelligence &amp;amp; analytique&lt;/font&gt;&lt;br&gt;&lt;span style=&quot;font-weight: normal;&quot;&gt;&lt;br&gt;Tableaux de bord revenus&lt;br&gt;Analyse client&lt;br&gt;Monitoring fraude&lt;br&gt;Reporting abonnements&lt;br&gt;Reporting conformité&lt;br&gt;Analyse SQL ad hoc&lt;/span&gt;" vertex="1">
+          <mxGeometry height="210" width="250" x="1570" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="snapshots_layer" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#581c87;strokeColor=#e879f9;fontColor=#ffffff;fontSize=17;fontStyle=1;align=center;verticalAlign=top;spacingTop=14;" value="6. Snapshots historiques" vertex="1">
+          <mxGeometry height="170" width="390" x="1110" y="750" as="geometry" />
+        </mxCell>
+        <mxCell id="snapshots" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#020617;strokeColor=#f0abfc;fontColor=#ffffff;fontSize=12;align=left;spacing=12;" value="Snapshots SCD2&#xa;&#xa;snp_payments&#xa;snp_subscriptions&#xa;snp_disputes&#xa;&#xa;Historisation des changements de statut" vertex="1">
+          <mxGeometry height="120" width="270" x="1170" y="790" as="geometry" />
+        </mxCell>
+        <mxCell id="tests" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#431407;strokeColor=#fb923c;fontColor=#ffffff;fontSize=14;fontStyle=1;align=center;" value="Tests qualité dbt automatisés : not_null • unique • accepted_values • relationships" vertex="1">
+          <mxGeometry height="45" width="630" x="400" y="705" as="geometry" />
+        </mxCell>
+        <mxCell id="legend" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#111827;strokeColor=#64748b;fontColor=#ffffff;fontSize=12;align=left;spacing=12;" value="&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Légende&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;br&gt;Flèches blanches : dépendances dbt et flux ELT&lt;br&gt;Flèches violettes : jointures dimensionnelles et agrégations des marts&lt;br&gt;Flèches rouges : consommation analytique par dashboards, reporting et SQL&lt;br&gt;Flèche blanche pointillée : suivi des snapshots SCD2&lt;br&gt;Bandeau orange : tests qualité dbt automatisés" vertex="1">
+          <mxGeometry height="150" width="510" x="50" y="765" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="raw_tables" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;strokeWidth=4;strokeColor=#ffffff;" target="staging_views" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="staging_views" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;strokeWidth=4;strokeColor=#ffffff;" target="intermediate_models" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="intermediate_models" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;strokeWidth=4;strokeColor=#ffffff;" target="dimensions" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1120" y="330" />
+              <mxPoint x="1120" y="330" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="intermediate_models" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;strokeWidth=4;strokeColor=#ffffff;" target="facts" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="875" y="220" />
+              <mxPoint x="1398" y="220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="dimensions" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=3;strokeColor=#c084fc;" target="business_marts" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="facts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=3;strokeColor=#c084fc;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" target="business_marts" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1372.5" y="409.9999999999998" as="sourcePoint" />
+            <mxPoint x="1270" y="564.9999999999998" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="business_marts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=4;strokeColor=#f87171;" target="analytics" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1218" y="660" />
+              <mxPoint x="1520" y="660" />
+              <mxPoint x="1520" y="375" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="facts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=3;strokeColor=#f87171;" target="analytics" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="marts" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeWidth=3;strokeColor=#ffffff;dashed=1;" target="snapshots_layer" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

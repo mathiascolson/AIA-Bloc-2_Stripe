@@ -1,0 +1,66 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="NoSQL Document Model Simplified" id="0">
+    <mxGraphModel dx="3142" dy="1611" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1500" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sources" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=16;fontStyle=1;" value="1. Sources d’événements&lt;br&gt;&lt;br&gt;API Stripe&lt;br&gt;Webhooks&lt;br&gt;suivi web / mobile&lt;br&gt;logs API Gateway&lt;br&gt;feedbacks clients" vertex="1">
+          <mxGeometry height="170" width="230" x="95" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="collector" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=16;fontStyle=1;" value="2. Couche de collecte des événements&lt;br&gt;&lt;br&gt;Bus d’événements Apache Kafka&lt;br&gt;&lt;br&gt;Rôle :&lt;br&gt;collecter, ordonner et distribuer les événements semi-structurés produits par les API et applications" vertex="1">
+          <mxGeometry height="210" width="320" x="410" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="mongodb" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=16;fontStyle=1;" value="3. Stockage documentaire MongoDB&lt;br&gt;&lt;br&gt;Collections :&lt;br&gt;application_logs&lt;br&gt;clickstream_events&lt;br&gt;customer_feedback&lt;br&gt;risk_events&lt;br&gt;ml_feature_snapshots&lt;br&gt;&lt;br&gt;Rôle :&lt;br&gt;schéma flexible pour données imbriquées et évolutives" vertex="1">
+          <mxGeometry height="270" width="360" x="910" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="oltp" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=15;fontStyle=1;" value="4. Références vers l’OLTP&lt;br&gt;&lt;br&gt;PostgreSQL reste la source de vérité transactionnelle.&lt;br&gt;&lt;br&gt;Les documents NoSQL conservent seulement des identifiants de référence :&lt;br&gt;customer_id&lt;br&gt;merchant_id&lt;br&gt;payment_id&lt;br&gt;transaction_id" vertex="1">
+          <mxGeometry height="230" width="300" x="620" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="ml" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=16;fontStyle=1;" value="5. Intégration Machine Learning&lt;br&gt;&lt;br&gt;Extraction de features de risque&lt;br&gt;Scoring du risque&lt;br&gt;Monitoring modèle&lt;br&gt;Données d&#39;entraînement&lt;br&gt;&lt;br&gt;Sorties :&lt;br&gt;risk_score&lt;br&gt;risk_level&lt;br&gt;model_version" vertex="1">
+          <mxGeometry height="230" width="300" x="1450" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="analytics" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=16;fontStyle=1;" value="6. Intégration OLAP / analytique&lt;br&gt;&lt;br&gt;Marts Snowflake + dbt&lt;br&gt;&lt;br&gt;Cas d’usage :&lt;br&gt;suivi du risque&lt;br&gt;analyse comportement client&lt;br&gt;performance produit&lt;br&gt;reporting de conformité" vertex="1">
+          <mxGeometry height="200" width="270" x="1360" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="principles" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;" value="&lt;span&gt;Principes de conception&lt;/span&gt;&lt;br&gt;&lt;br&gt;&lt;span&gt;MongoDB stocke les données événementielles, semi-structurées et volumineuses.&lt;/span&gt;&lt;br&gt;&lt;span&gt;PostgreSQL / NeonDB conserve la source de vérité transactionnelle.&lt;/span&gt;&lt;br&gt;&lt;span&gt;Snowflake reçoit les données préparées pour l’analyse.&lt;/span&gt;&lt;br&gt;&lt;span&gt;Les modèles Machine Learning utilisent les événements NoSQL et les snapshots de features pour produire les scores.&lt;/span&gt;" vertex="1">
+          <mxGeometry height="110" width="830" x="30" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="legend" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eeeeee;strokeColor=#666666;fontSize=13;align=left;" value="&lt;div align=&quot;left&quot;&gt;&lt;b&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Légende&lt;/font&gt;&lt;/b&gt;&lt;br&gt;&lt;br&gt;Flèches noires : ingestion des événements&lt;br&gt;Flèches grises pointillées : références logiques vers les IDs OLTP&lt;br&gt;Flèches violettes : features ML et scoring&lt;br&gt;Flèches rouges : exports analytiques&lt;/div&gt;" vertex="1">
+          <mxGeometry height="110" width="390" x="95" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="a1" edge="1" parent="1" source="sources" style="endArrow=block;html=1;rounded=0;strokeWidth=3;fontSize=13;labelBackgroundColor=none;entryX=-0.003;entryY=0.436;entryDx=0;entryDy=0;entryPerimeter=0;" target="collector" value="événements">
+          <mxGeometry relative="1" x="0.0461" y="19" as="geometry">
+            <mxPoint x="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a2" edge="1" parent="1" source="collector" style="endArrow=block;html=1;rounded=0;strokeWidth=3;fontSize=13;labelBackgroundColor=none;exitX=1.007;exitY=0.481;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.002;entryY=0.522;entryDx=0;entryDy=0;entryPerimeter=0;" target="mongodb" value="semi-structured événements">
+          <mxGeometry relative="1" x="0.0043" y="20" as="geometry">
+            <mxPoint x="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a3" edge="1" parent="1" source="mongodb" style="endArrow=block;html=1;rounded=0;strokeColor=#9673a6;strokeWidth=3;fontSize=13;labelBackgroundColor=none;" target="ml" value="extraction de features">
+          <mxGeometry relative="1" y="-25" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a4" edge="1" parent="1" source="ml" style="endArrow=block;html=1;rounded=0;strokeColor=#9673a6;strokeWidth=2;dashed=1;fontSize=13;entryX=0.452;entryY=1.001;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;labelBackgroundColor=none;" target="mongodb" value="scores de risque">
+          <mxGeometry relative="1" x="0.0123" y="-20" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1600" y="570" />
+              <mxPoint x="1070" y="570" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a5" edge="1" parent="1" source="mongodb" style="endArrow=block;html=1;rounded=0;strokeColor=#b85450;strokeWidth=3;fontSize=13;exitX=1;exitY=0.25;exitDx=0;exitDy=0;labelBackgroundColor=none;" target="analytics" value="export analytique">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a6" edge="1" parent="1" source="mongodb" style="endArrow=block;html=1;rounded=0;strokeColor=#666666;strokeWidth=2;dashed=1;fontSize=13;labelBackgroundColor=none;" target="oltp" value="IDs de référence">
+          <mxGeometry relative="1" x="0.3529" y="-2" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

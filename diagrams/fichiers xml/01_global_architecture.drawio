@@ -1,0 +1,195 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Architecture globale" id="stripe-global-architecture">
+    <mxGraphModel dx="2175" dy="1115" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;strokeColor=none;fillColor=none;fontSize=28;fontStyle=1;align=center;verticalAlign=middle;" value="Architecture de données Stripe — Vue globale" vertex="1">
+          <mxGeometry height="50" width="880" x="380" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="block_sources" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=16;fontStyle=1;verticalAlign=top;spacingTop=12;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;1. Sources de données Stripe&lt;/font&gt;" vertex="1">
+          <mxGeometry height="370" width="300" x="70" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="stripe_apps" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Applications et API Stripe&lt;br&gt;Checkout, Payments API, Billing, Dashboard, remboursements, litiges&lt;/font&gt;" vertex="1">
+          <mxGeometry height="106" width="230" x="105" y="770" as="geometry" />
+        </mxCell>
+        <mxCell id="user_collection" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;" value="&lt;b&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;Collecte des données utilisateur&lt;br&gt;Suivi web/mobile, événements de navigation, sessions, retours utilisateurs, logs API Gateway&lt;/font&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="150" width="230" x="105" y="900" as="geometry" />
+        </mxCell>
+        <mxCell id="block_oltp" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=16;fontStyle=1;verticalAlign=top;spacingTop=12;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;2. Couche transactionnelle OLTP&lt;/font&gt;" vertex="1">
+          <mxGeometry height="350" width="260" x="440" y="720.5" as="geometry" />
+        </mxCell>
+        <mxCell id="postgres" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#82b366;fontSize=14;fontStyle=1;" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;PostgreSQL / NeonDB&lt;br&gt;Base relationnelle normalisée&lt;br&gt;Intégrité ACID&lt;br&gt;Cohérence opérationnelle&lt;/font&gt;" vertex="1">
+          <mxGeometry height="130" width="190" x="475" y="788.5" as="geometry" />
+        </mxCell>
+        <mxCell id="oltp_note" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8fff8;strokeColor=#82b366;fontSize=12;" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;b&gt;Données opérationnelles centrales :&lt;br&gt;clients, marchands, paiements, transactions, remboursements, litiges, abonnements&lt;/b&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="130" width="220" x="460" y="930" as="geometry" />
+        </mxCell>
+        <mxCell id="block_ingestion" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=16;fontStyle=1;verticalAlign=top;spacingTop=12;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;3. Ingestion et zone brute&lt;/font&gt;" vertex="1">
+          <mxGeometry height="320" width="300" x="794" y="750" as="geometry" />
+        </mxCell>
+        <mxCell id="event_collector" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d79b00;fontSize=13;fontStyle=1;dashed=1;" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Collecteur d’événements&lt;br&gt;Apache Kafka / logs API Gateway&lt;br&gt;Point d’entrée des flux continus&lt;/font&gt;" vertex="1">
+          <mxGeometry height="110" width="221" x="829" y="950" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" parent="1" style="shape=cylinder3d;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#ffffff;strokeColor=#d79b00;fontSize=14;fontStyle=1;" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Datalake Amazon S3&lt;br&gt;Fichiers bruts par lots et exports d’événements&lt;/font&gt;" vertex="1">
+          <mxGeometry height="98.5" width="220" x="830" y="820" as="geometry" />
+        </mxCell>
+        <mxCell id="block_raw" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=16;fontStyle=1;verticalAlign=top;spacingTop=12;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;4. Couche RAW Snowflake&lt;/font&gt;" vertex="1">
+          <mxGeometry height="320" width="300" x="1170" y="750" as="geometry" />
+        </mxCell>
+        <mxCell id="snowflake_raw" parent="1" style="shape=cylinder3d;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#ffffff;strokeColor=#9673a6;fontSize=14;fontStyle=1;" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Snowflake RAW&lt;br&gt;Tables sources répliquées brutes&lt;br&gt;Schéma d’atterrissage&lt;/font&gt;" vertex="1">
+          <mxGeometry height="106" width="190" x="1225" y="810" as="geometry" />
+        </mxCell>
+        <mxCell id="quality" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;fontSize=13;fontStyle=1;" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Validation qualité RAW&lt;br&gt;Comptage des lignes, unicité, valeurs non nulles, cohérence référentielle&lt;/font&gt;" vertex="1">
+          <mxGeometry height="109" width="220" x="1210" y="951" as="geometry" />
+        </mxCell>
+        <mxCell id="block_dbt" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=16;fontStyle=1;verticalAlign=top;spacingTop=12;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;5. Couche OLAP / analytique&lt;/font&gt;" vertex="1">
+          <mxGeometry height="230" width="300" x="1170" y="1140" as="geometry" />
+        </mxCell>
+        <mxCell id="dbt" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#b85450;fontSize=13;fontStyle=1;" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;span&gt;Transformations dbt&lt;/span&gt;&lt;br&gt;&lt;span&gt;Couche staging&lt;/span&gt;&lt;br&gt;&lt;span&gt;Couche intermediate&lt;/span&gt;&lt;br&gt;&lt;span&gt;Faits&lt;/span&gt;&lt;br&gt;&lt;span&gt;Dimensions&lt;/span&gt;&lt;br&gt;&lt;span&gt;Marts métier&lt;/span&gt;&lt;br&gt;&lt;span&gt;Snapshots SCD2&lt;/span&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="160" width="210" x="1215" y="1190" as="geometry" />
+        </mxCell>
+        <mxCell id="block_consumption" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=16;fontStyle=1;verticalAlign=top;spacingTop=12;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;6. Analyses et cas d’usage métier&lt;/font&gt;" vertex="1">
+          <mxGeometry height="230" width="340" x="690" y="1140" as="geometry" />
+        </mxCell>
+        <mxCell id="analytics" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d6b656;fontSize=14;fontStyle=1;" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Analyses métier&lt;br&gt;Analyse du revenu&lt;br&gt;Segmentation client&lt;br&gt;Performance produit&lt;br&gt;Surveillance de la fraude&lt;br&gt;Reporting de conformité&lt;/font&gt;" vertex="1">
+          <mxGeometry height="160" width="240" x="740" y="1190" as="geometry" />
+        </mxCell>
+        <mxCell id="block_nosql" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=16;fontStyle=1;verticalAlign=top;spacingTop=12;dashed=1;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;7. Stockage documentaire NoSQL&lt;/font&gt;" vertex="1">
+          <mxGeometry height="240" width="320" x="250" y="1140" as="geometry" />
+        </mxCell>
+        <mxCell id="nosql" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontSize=14;fontStyle=1;dashed=1;" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;MongoDB / stockage documentaire&lt;br&gt;Logs applicatifs&lt;br&gt;Événements de navigation&lt;br&gt;Retours clients&lt;br&gt;Événements de risque&lt;br&gt;Instantanés de variables ML&lt;/font&gt;" vertex="1">
+          <mxGeometry height="170" width="240" x="293" y="1190" as="geometry" />
+        </mxCell>
+        <mxCell id="block_ml" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#eadcf8;strokeColor=#8e44ad;fontSize=16;fontStyle=1;verticalAlign=top;spacingTop=12;dashed=1;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;8. Machine Learning&lt;/font&gt;" vertex="1">
+          <mxGeometry height="180" width="770" x="475" y="1442" as="geometry" />
+        </mxCell>
+        <mxCell id="ml" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#8e44ad;fontSize=14;fontStyle=1;dashed=1;" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;Pipeline de détection de fraude&lt;br&gt;Extraction de variables&lt;br&gt;Entraînement et suivi MLflow&lt;br&gt;Calcul du score de risque&lt;br&gt;Surveillance et réentraînement&lt;/font&gt;" vertex="1">
+          <mxGeometry height="122" width="420" x="650" y="1490" as="geometry" />
+        </mxCell>
+        <mxCell id="block_airflow" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e2f0d9;strokeColor=#70ad47;fontSize=16;fontStyle=1;verticalAlign=top;spacingTop=12;" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;Orchestration Apache Airflow&lt;/font&gt;" vertex="1">
+          <mxGeometry height="100" width="1370" x="100" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="airflow_flow" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#70ad47;fontSize=14;fontStyle=1;" value="extraction OLTP → export des données brutes → chargement Snowflake RAW → validation qualité → transformations dbt → snapshots dbt" vertex="1">
+          <mxGeometry height="40" width="1190" x="190" y="620" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_apps_postgres" edge="1" parent="1" source="stripe_apps" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=default;labelBackgroundColor=none;" target="postgres" value="&lt;div&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;écritures&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;transactionnelles&lt;/font&gt;&lt;/div&gt;">
+          <mxGeometry relative="1" x="0.0278" y="26" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_user_event" edge="1" parent="1" source="user_collection" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#666666;dashed=1;labelBackgroundColor=none;" target="event_collector" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;événements comportementaux&lt;/font&gt;">
+          <mxGeometry relative="1" x="-0.2257" y="-10" as="geometry">
+            <mxPoint x="1" as="offset" />
+            <Array as="points">
+              <mxPoint x="220" y="1090" />
+              <mxPoint x="760" y="1090" />
+              <mxPoint x="760" y="1005" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_postgres_s3" edge="1" parent="1" source="postgres" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#000000;labelBackgroundColor=none;" target="s3" value="&lt;div&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;extraction par lots&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;/ CDC quasi temps réel&lt;/font&gt;&lt;/div&gt;">
+          <mxGeometry relative="1" x="-0.0286" y="36" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_event_s3" edge="1" parent="1" source="event_collector" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#666666;dashed=1;labelBackgroundColor=none;" target="s3" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;exports d’événements&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_event_nosql" edge="1" parent="1" source="event_collector" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#666666;dashed=1;labelBackgroundColor=none;" target="nosql" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;événements semi-structurés bruts&lt;/font&gt;">
+          <mxGeometry relative="1" x="0.1061" y="10" as="geometry">
+            <mxPoint y="1" as="offset" />
+            <Array as="points">
+              <mxPoint x="939" y="1110" />
+              <mxPoint x="660" y="1110" />
+              <mxPoint x="660" y="1278" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_s3_raw" edge="1" parent="1" source="s3" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#000000;labelBackgroundColor=none;" target="snowflake_raw" value="&lt;div&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;COPY INTO&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;/ ingestion externe&lt;/font&gt;&lt;/div&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_raw_quality" edge="1" parent="1" source="snowflake_raw" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#000000;" target="quality" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;contrôles qualité&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_quality_dbt" edge="1" parent="1" source="quality" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#000000;labelBackgroundColor=none;" target="dbt" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;données brutes validées&lt;/font&gt;">
+          <mxGeometry relative="1" x="-0.3846" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_dbt_analytics" edge="1" parent="1" source="dbt" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#000000;labelBackgroundColor=none;" target="analytics" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;marts validés&lt;/font&gt;">
+          <mxGeometry relative="1" x="-0.0196" y="-20" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_dbt_ml" edge="1" parent="1" source="dbt" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#8e44ad;dashed=1;labelBackgroundColor=none;" target="ml" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;variables préparées&lt;/font&gt;">
+          <mxGeometry relative="1" x="-0.0665" y="20" as="geometry">
+            <mxPoint x="1" as="offset" />
+            <Array as="points">
+              <mxPoint x="1320" y="1550" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_nosql_ml" edge="1" parent="1" source="nosql" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#8e44ad;dashed=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;labelBackgroundColor=none;" target="ml" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;variables semi-structurées&lt;/font&gt;">
+          <mxGeometry relative="1" x="0.0235" y="-10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="413" y="1551" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_ml_nosql" edge="1" parent="1" source="ml" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#666666;dashed=1;entryX=0.988;entryY=0.946;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.013;exitY=0.093;exitDx=0;exitDy=0;exitPerimeter=0;labelBackgroundColor=none;" target="nosql" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;scores de risque / événements de risque&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_ml_analytics" edge="1" parent="1" source="ml" style="endArrow=block;html=1;rounded=0;strokeWidth=2;strokeColor=#8e44ad;dashed=1;labelBackgroundColor=none;" target="analytics" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;scores de risque pour reporting&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_airflow_postgres" edge="1" parent="1" source="block_airflow" style="endArrow=open;html=1;rounded=0;strokeWidth=3;strokeColor=#70ad47;dashed=1;exitX=0.343;exitY=0.875;exitDx=0;exitDy=0;exitPerimeter=0;" target="postgres" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="772.4576271186438" y="1420" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_airflow_s3" edge="1" parent="1" source="block_airflow" style="endArrow=open;html=1;rounded=0;strokeWidth=3;strokeColor=#70ad47;dashed=1;exitX=0.51;exitY=1.021;exitDx=0;exitDy=0;exitPerimeter=0;" target="s3" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="799" y="720" />
+              <mxPoint x="940" y="720" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_airflow_raw" edge="1" parent="1" source="block_airflow" style="endArrow=open;html=1;rounded=0;strokeWidth=3;strokeColor=#70ad47;dashed=1;exitX=0.613;exitY=1.036;exitDx=0;exitDy=0;exitPerimeter=0;" target="snowflake_raw" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="940" y="700" />
+              <mxPoint x="1320" y="700" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_airflow_dbt" edge="1" parent="1" source="block_airflow" style="endArrow=open;html=1;rounded=0;strokeWidth=1;strokeColor=#70ad47;dashed=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="dbt" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1520" y="630" />
+              <mxPoint x="1520" y="1270" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#999999;fontSize=12;align=left;spacing=8;" value="&lt;div&gt;&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;Légende&lt;/b&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;span&gt;&lt;br&gt;&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;span&gt;Flèches noires pleines : flux transactionnels et analytiques par lots&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;span&gt;Flèches grises pointillées : flux événementiels et semi-structurés&lt;/span&gt;&lt;br&gt;&lt;span&gt;Flèches violettes pointillées : variables ML, calcul du score et retour de décision&lt;/span&gt;&lt;br&gt;&lt;span&gt;Flèches vertes pointillées : orchestration et contrôles&lt;/span&gt;&lt;/font&gt;" vertex="1">
+          <mxGeometry height="140" width="600" x="30" y="1630" as="geometry" />
+        </mxCell>
+        <mxCell id="7SXlqurA069OdL_2dyxw-2" edge="1" parent="1" source="ml" style="endArrow=block;html=1;rounded=0;strokeWidth=4;strokeColor=light-dark(#3700CC, #8e44ad);dashed=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;fillColor=#6a00ff;labelBackgroundColor=none;" target="stripe_apps" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;décision de risque en temps réel&lt;/font&gt;">
+          <mxGeometry relative="1" x="-0.2832" y="-23" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="60" y="1583" />
+              <mxPoint x="60" y="823" />
+            </Array>
+            <mxPoint x="233" y="1564" as="sourcePoint" />
+            <mxPoint x="60" y="950" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
